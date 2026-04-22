@@ -25,10 +25,12 @@ public class Program {
                 break;
             }
             String actionTime = noteTime(logTime);
+            logTime = LocalDateTime.now();
             writeToLog(actionTime + " search: " + userAction);
         }
         //finish time
         String terminationTime = noteTime(logTime);
+        logTime = LocalDateTime.now();
         writeToLog(terminationTime + " exit");
 
         System.out.println("Program terminated.");
