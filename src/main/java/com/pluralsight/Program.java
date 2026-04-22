@@ -12,7 +12,7 @@ public class Program {
         Scanner scan = new Scanner(System.in);
         LocalDateTime logTime = LocalDateTime.now();
         String userAction = "";
-
+        //Start time
         String launchTime = noteTime(logTime);
         writeToLog(launchTime + " launch ");
         //Prompt actions
@@ -21,31 +21,34 @@ public class Program {
             System.out.println("Enter your search term (X to exit):");
             userAction = scan.nextLine();
 
-            if(userAction.equalsIgnoreCase("exit") || userAction.equalsIgnoreCase("x"){
+            if (userAction.equalsIgnoreCase("exit") || userAction.equalsIgnoreCase("x")){
                 break;
             }
             String actionTime = noteTime(logTime);
             writeToLog(actionTime + " search: " + userAction);
         }
+        //finish time
         String terminationTime = noteTime(logTime);
         writeToLog(terminationTime + " exit");
 
         System.out.println("Program terminated.");
-
-        }
-
+        scan.close();
     }
 
-    private static String noteTime(LocalDateTime logTime) {
-        DateTimeFormatter exactTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return logTime.format(exactTime);
+
+
+private static String noteTime(LocalDateTime logTime) {
+    DateTimeFormatter exactTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    return logTime.format(exactTime);
+}
+
+private static void writeToLog(String message) {
+    try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter("logs.txt", true))) {
+        bufWriter.write(message);
+        bufWriter.newLine();
+    } catch (IOException e) {
+        System.out.println("Could not write to log file.");
+        throw new RuntimeException(e);
     }
-    private static void writeToLog(String message) {
-        try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter("logs.txt", true))) {
-            bufWriter.write(message);
-            bufWriter.newLine();
-        } catch (IOException e) {
-            System.out.println("Could not write to log file.");
-            throw new RuntimeException(e);
-        }
+}
 }
